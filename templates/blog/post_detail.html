@@ -15,6 +15,24 @@
                     {% include './icons/pencil-fill.svg' %}
                 </a>
             {% endif %}
+            <a href="{% url 'comment_new' pk=post.pk %}" class="btn btn-default">
+                {% include './icons/comment-icon.svg' %}
+            </a>
         </aside>
+        {% for comment in comments %}
+            <article class="comment">
+                <time class="date">
+                    {{ comment.created_date }}
+                </time>
+                <h2><a href="{% url 'comment_detail' pk=comment.post.pk %}">
+                    {% if comment.author %}
+                        {{ comment.author }}
+                    {% else %}
+                        Anonymous
+                    {% endif %}
+                </a></h2>
+                <p>{{ comment.text|linebreaksbr }}</p>
+            </article>
+        {% endfor %}
     </article>
 {% endblock %}
